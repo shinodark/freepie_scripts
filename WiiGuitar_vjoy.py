@@ -5,12 +5,6 @@ POLLING_PERIOD 		= 1    	#interval in ms
 def map_guitar_button(n, guitar_button, vjoy_button):
 	vJoy[n].setButton(vjoy_button, wiimote[n].guitar.buttons.button_down(guitar_button))
 	
-def map_guitar_pov(n, guitar_button, vjoy_pov):
-	if wiimote[n].guitar.buttons.button_down(guitar_button):
-		vJoy[n].setDigitalPov(0, vjoy_pov)
-	else:
-		vJoy[n].setDigitalPov(0, VJoyPov.Nil)
-	
 def map_guitar(n):
 	map_guitar_button(n, GuitarButtons.Green, 0)
 	map_guitar_button(n, GuitarButtons.Red, 1)
