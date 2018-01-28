@@ -4,18 +4,28 @@ POLLING_PERIOD 		= 1    	#interval in ms
 def map_snes_button(n, snes_button, vjoy_button):
 	vJoy[n].setButton(vjoy_button, wiimote[0].classicController.buttons.button_down(snes_button))
 
-	
 def map_pov(n):
-    if wiimote[0].classicController.buttons.button_down(ClassicControllerButtons.DPadUp):
-        vJoy[n].setDigitalPov(0, VJoyPov.Up)
-    elif wiimote[0].classicController.buttons.button_down(ClassicControllerButtons.DPadDown):
-        vJoy[n].setDigitalPov(0, VJoyPov.Down)
-    elif wiimote[0].classicController.buttons.button_down(ClassicControllerButtons.DPadLeft):
-        vJoy[n].setDigitalPov(0, VJoyPov.Left)
-    elif wiimote[0].classicController.buttons.button_down(ClassicControllerButtons.DPadRight):
-        vJoy[n].setDigitalPov(0, VJoyPov.Right)
-    else:
-		vJoy[n].setDigitalPov(0, VJoyPov.Nil)		
+	val = 0
+	maxVal = vJoy[n].continuousPovMax
+	if wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadUp):
+		val = 0 # UP
+		if wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadRight):
+			val += maxVal/8 # UP/RIGHT
+		elif wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadLeft):
+			val = 7 * maxVal/8 # UP/LEFT
+	elif wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadRight):
+		val = maxVal/4 # RIGHT
+		if wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadDown):
+			val += maxVal/8 # DOWN/RIGHT
+	elif wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadDown):
+		val = maxVal/2 # DOWN
+		if wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadLeft):
+			val += maxVal/8 # DOWN/LEFT
+	elif wiimote[n].classicController.buttons.button_down(ClassicControllerButtons.DPadLeft):
+		val = 3 * maxVal/4 # LEFT
+	else:
+		val = -1
+	vJoy[n].setAnalogPov(0, val)
 
 def map_snes(n):
 	map_snes_button(n, ClassicControllerButtons.A, 0)
