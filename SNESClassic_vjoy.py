@@ -2,7 +2,7 @@
 POLLING_PERIOD 		= 1    	#interval in ms
 
 def map_snes_button(n, snes_button, vjoy_button):
-	vJoy[n].setButton(vjoy_button, wiimote[0].classicController.buttons.button_down(snes_button))
+	vJoy[n].setButton(vjoy_button, wiimote[n].classicController.buttons.button_down(snes_button))
 
 def map_pov(n):
 	val = 0
