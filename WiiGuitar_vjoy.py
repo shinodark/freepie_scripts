@@ -14,12 +14,13 @@ def map_guitar(n):
 	map_guitar_button(n, GuitarButtons.Minus, 5)
 	map_guitar_button(n, GuitarButtons.Plus, 6)
 	
+	maxVal = vJoy[n].continuousPovMax
 	if wiimote[n].guitar.buttons.button_down(GuitarButtons.StrumUp):
-		vJoy[n].setDigitalPov(0, VJoyPov.Up)	
+		vJoy[n].setAnalogPov(0, 0)	
 	elif wiimote[n].guitar.buttons.button_down(GuitarButtons.StrumDown):
-		vJoy[n].setDigitalPov(0, VJoyPov.Down)
+		vJoy[n].setAnalogPov(0, maxVal/2)
 	else:
-		vJoy[n].setDigitalPov(0, VJoyPov.Nil)
+		vJoy[n].setAnalogPov(0, -1)
 	
 	whammyX = wiimote[n].guitar.whammy.x
 	# diagnostics.watch(whammyX)
